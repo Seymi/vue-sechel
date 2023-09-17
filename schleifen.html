@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <title>Vue-Grundlagen</title>
+        <meta name="description" content="Das Vue-3-Buch" />
+        <meta name="author" content="Dr. Fabion Deitelhoff" />
+    </head>
+
+    <body>
+        <p>Ein wenig Inhalt als einfacher Test...</p>
+
+        <script type="importmap">
+            {
+                "imports": {
+                    "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+                }
+            }
+        </script>
+
+        <!-- Die Referenz auf die Vue-Bibliothek. -->
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <!-- HTML-Element (div) zum Mounten der App. -->
+        <div id="first-app">
+            <p>{{ info }}</p>
+
+            <div v-if="events.length > 5">
+                <div v-for="event in events" :key="event.id">
+                    <p>
+                        ID: {{ event.id }}
+                        <br />
+                        Name: {{ event.name }}
+                        <br />
+                        Teilnehmer: {{ event.participantCount }}
+                    </p>
+                </div>
+            </div>
+            <p v-else>
+                Derzeit zu wenig Veranstaltungen.
+            </p>
+
+            <li v-for="(event, index) in events" :key="event.id">
+                Event: {{ event.name }}
+            </li>
+
+            <div>
+                Neue Veranstaltung hinzufügen: {{ eventName }}
+                <input v-model="eventName" placeholder="Name der Veranstaltung" />
+                <button @click="addEvent">hinzufügen</button>
+            </div>
+
+        </div>
+
+        <!-- Das Script-Element für die erste Vue-App. -->
+        <script>
+            const FirstVueApp = {
+                data() {
+                    return {
+                        info: 'Inhalt aus der Vue-Instanz...',
+                        events: [
+                            { id: 1, name: 'Veranstaltung 1', participantCount: 7 },
+                            { id: 2, name: 'Veranstaltung 2', participantCount: 9 },
+                            { id: 3, name: 'Veranstaltung 3', participantCount: 13 },
+                            { id: 4, name: 'Veranstaltung 4', participantCount: 22 },
+                        ],
+                        eventName: "neue Veranstaltung",
+                    };
+                },
+                methods: {
+                    addEvent() {
+                        console.log('Veranstaltung hinzugefügt', this.eventName);
+                        this.events.push({
+                            id: this.events.length + 1,
+                            name: this.eventName,
+                            participantCount: 0,
+                        });
+                        this.eventName = '';
+                    },
+                },
+            };
+
+            Vue.createApp(FirstVueApp).mount('#first-app');
+        </script>
+
+    </body>
+</html>
