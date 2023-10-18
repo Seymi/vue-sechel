@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Einkauf Listen Manager</title>
+        <link rel="stylesheet" href="css/ekm.css">
+    </head>
+    <body>
+        <div id="shopping-list">
+            <h1>{{ header }}</h1>
+            <div class="add-item-form">
+                <input id="new-item" type="text" v-model="newItem" placeholder="Artikel hinzufügen" @keyup.enter="addItem">
+                <button class="btn btn-primary" @click="addItem">hinzufügen</button>
+                <!--
+                    <b-button variant="primary">Primary</b-button>
+                -->
+            </div>
+
+            <div v-if="items.length > 0">
+                <ul>
+                    <li v-for="item in items">{{ item }}</li>
+                </ul>
+            </div>
+
+        </div>
+        <script src="https://unpkg.com/vue@3"></script>
+        <script>
+            var shoppingList = {
+                data() {
+                    return {
+                        header: 'Einkauf Listen Manager!',
+                        newItem: '',
+                        items: [
+                            /*
+                            '1 l Milch',
+                            'Eier',
+                            'Joughurts - klein + griechisch',
+                            */
+                        ]
+                    }
+                },
+                methods: {
+                    addItem: function() {
+                        if (this.newItem.length > 0) {
+                            console.log('Artikel hinzugefügt: ', this.newItem);
+                            this.items.push(this.newItem);
+                            this.newItem = '';
+                        } else {
+                            console.log('Keine Eingabe erfolgt');
+                        }
+                    }
+                }
+            };
+            const shoppingListApp = Vue.createApp(shoppingList).mount('#shopping-list');
+        </script>
+    </body>
+</html>

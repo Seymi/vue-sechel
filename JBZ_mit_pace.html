@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Jahres Bestzeiten</title>
+        <meta name="description" content="Laufen - meine Jahresbestzeiten" />
+        <meta name="author" content="Martin Seymann" />
+
+        <!-- link rel="stylesheet" href="css/styles.css?v=1.0" -->
+
+    </head>
+
+    <body>
+        <p>Laufen - Meine persönlichen Jahresbestzeiten</p>
+
+        <!-- HTML-Element (div) zum Mounten der App. -->
+        <div id="jbz-app">
+            <div id="runnerName">
+                <p>{{ laeufer }}</p>
+            </div>
+
+            <div>
+                <li v-for="(bz, index) in jbz" :key="jbz.id">
+                    km {{ bz.distance_km }}:
+                    {{ bz.pace }} min/km
+                </li>
+                <br />
+            </div>
+
+            <div>
+                Neue Jahresbestzeit hinzufügen:
+                {{ distance_km }}
+                <input v-model="distance_km" placeholder="Distanz" />
+                <input v-model="pace" placeholder="Pace" />
+                <button @click="addJbz">hinzufügen</button>
+            </div>
+
+            <div v-if="jbz.length > 0">
+                <div v-for="bestZeit in jbz" :key="jbz.id">
+                    <bestZeit-component :bestZeit="bestZeit" />
+                </div>
+            </div>
+            <div v-else>
+                <p>Derzeit keine Bestzeiten</p>
+            </div>
+
+        </div>
+
+        <!-- Die Referenz auf die Vue-Bibliothek. -->
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <!-- Das Script-Element für die erste Vue-App. -->
+        <script>
+            const FirstVueApp = {
+                data() {
+                    return {
+                        laeufer: 'Martin Seymann',
+                        jbz: [
+                            { id: 1, distance_km: 1, pace: '05:10.7' },
+                            { id: 2, distance_km: 2, pace: '05:28.9' },
+                            { id: 3, distance_km: 3, pace: '05:40.9' }
+                        ],
+                        distance_km: 0,
+                        pace: '08:00.0'
+                    };
+                },
+                methods: {
+                    addJbz() {
+                        console.log('Distanz hinzugefügt', this.distance_km);
+                        this.jbz.push({
+                            id: this.distance_km,
+                            distance_km: this.distance_km,
+                            pace: this.pace
+                        });
+                        this.distance_km = '';
+                    },
+                },
+            };
+
+            const firstApp = Vue.createApp(FirstVueApp);
+
+            firstApp.component('bestZeit-component', {
+                props: ['bestZeit'],
+                template: `<p>
+                        ID: {{ bestZeit.id }}
+                        <br />
+                        Distanz: {{ bestZeit.distance_km }}
+                        <br />
+                        Schnitt: {{ bestZeit.pace }}
+                    </p>`
+            });
+
+            firstApp.mount('#jbz-app');
+
+            //FirstVueApp.mount('#jbz-app');
+
+        </script>
+    </body>
+</html>
