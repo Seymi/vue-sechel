@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <!--
+            <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>EKM - Preis Liste</title>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>unsere Preise</h1>
+            <p>
+                Eine Familie mit vier Personen hat durchschnittliche Kosten für Lebensmittel und Haushaltswaren in der Höhe von ca. {{ averageCost }} Euro.<br />
+                Mit dieser App kannst Du dir im Schnitt mindestens {{ averageSaving }} Euro im Monat ersparen.<br />
+                Der Preis der Standard Mitgliedschaft beträgt {{ getStandardPrice() }} Euro für ein ganzes Jahr. Du hast also bereits im ersten Monat gespart.<br />
+                Premium Mitglieder haben die Kosten im ersten Monat herinnen.<br />
+            </p>
+
+            <price-plan-picker :plans="plans"></price-plan-picker>
+
+        </div>
+
+        <script type="text/x-template" id="price-plan-template">
+            <div class="price-plan">
+                <div class="description">
+                    <button>{{ price_plan }}</button>
+                    <!--
+                        <span class="title">{{ price_plan }}</span>
+                    -->
+
+                </div>
+            </div>
+        </script>
+
+        <script type="text/x-template" id="price-plan-picker-template">
+            <price-plan v-for="plan in plans" :price_plan="plan.price_plan"></price-plan>
+        </script>
+
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="app.js"></script>
+        <link rel="stylsheet" href="style.css">
+
+    </body>
+</html>

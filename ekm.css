@@ -1,0 +1,14 @@
+.strikeout {
+    text-decoration: line-through;
+  }
+
+.highPriority {
+  color: lightcoral;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.lowPriority {
+  color: gray;
+  font-size: smaller;
+}

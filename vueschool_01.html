@@ -3,51 +3,114 @@
     <head>
         <meta charset="UTF-8">
         <title>Einkauf Listen Manager</title>
-        <link rel="stylesheet" href="css/ekm.css">
+        <link rel="stylesheet" href="ekm.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
         <div id="shopping-list">
-            <h1>{{ header }}</h1>
-            <div class="add-item-form">
-                <input id="new-item" type="text" v-model="newItem" placeholder="Artikel hinzufügen" @keyup.enter="addItem">
-                <button class="btn btn-primary" @click="addItem">hinzufügen</button>
-                <!--
-                    <b-button variant="primary">Primary</b-button>
-                -->
+            <div class="header">
+                <h1>{{ header }}</h1>
+                <button v-if="state === 'default'" class="btn btn-primary" @click="changeState('edit')"   >neue Liste</button>
+                <button v-else                     class="btn btn-cancel"  @click="changeState('default')">beenden   </button>
+            </div>
+
+            <div v-if="state === 'edit'" class="add-item-form">
+                <label>
+                    Dringlichkeit
+                    <select v-model="newItemPriority" @change="focusOnNewItem()">
+                        <option value="high">heute</option>
+                        <option value="normal">normal</option>
+                        <option value="low">kann warten</option>
+                    </select>
+                </label>
+                <br />
+
+                <input id="new-item" ref="new-item-text-input" type="text" v-model="newItem" placeholder="Artikel hinzufügen" @keyup.enter="addItem">
+
+                <button class="btn btn-primary" :disabled="newItem.length === 0" @click="addItem">hinzufügen</button>
             </div>
 
             <div v-if="items.length > 0">
                 <ul>
-                    <li v-for="item in items">{{ item }}</li>
+                    <!-- v-touch:swipe.left="onSwipeLeftItem" -->
+                    <li v-for="(item, index) in orderedItems" :key="item.id"
+                            :class="{   strikeout: isInCart(item.itemStatus),
+                                        highPriority: item.priority === 'high',
+                                        lowPriority:  item.priority === 'low'
+                                    }"
+                            @click="item.inCart=!item.inCart"
+                            @dblclick="item.itemStatus='pending'"
+
+                    >
+                        <input type="checkbox" v-model="item.inCart">
+                        {{ item.id }} {{ item.itemName }} {{ item.priority }}
+                        <br />
+                        <!--
+                            <input type="checkbox" v-model="item.remove" placeholder="Artikel löschen">
+                            <button class="btn btn-secondary removeItemButton" placeholder="Artikel löschen" @click="removeItem">x</button>
+                        -->
+                    </li>
                 </ul>
             </div>
-
         </div>
+
         <script src="https://unpkg.com/vue@3"></script>
         <script>
+            //import Vue3TouchEvents from "vue3-touch-events";
+
             var shoppingList = {
                 data() {
                     return {
+                        state: 'default',
                         header: 'Einkauf Listen Manager!',
+                        //itemOrder: 'inOrder',
+                        itemOrder: 'reverseOrder', // inOrder, alphabeticalOrder
                         newItem: '',
-                        items: [
-                            /*
-                            '1 l Milch',
-                            'Eier',
-                            'Joughurts - klein + griechisch',
-                            */
-                        ]
+                        newItemPriority: 'normal',
+                        items: []
+                    }
+                },
+                computed: {
+                    orderedItems() {
+                        if (this.itemOrder === 'reverseOrder') {
+                            return this.items.slice(0).reverse();
+                        } else {
+                            return this.items
+                        }
                     }
                 },
                 methods: {
                     addItem: function() {
                         if (this.newItem.length > 0) {
                             console.log('Artikel hinzugefügt: ', this.newItem);
-                            this.items.push(this.newItem);
+                            this.items.push(
+                                {
+                                    id:         this.items.length + 1,
+                                    itemName:   this.newItem,
+                                    itemStatus: 'pending',
+                                    priority:   this.newItemPriority,
+                                    itemAmount: 1,
+                                    unitSize:   {unitAmount: null, unitUnit: null},
+                                    inCart:     false
+
+                                }
+                            );
                             this.newItem = '';
                         } else {
                             console.log('Keine Eingabe erfolgt');
                         }
+                    },
+                    changeState: function(newState) {
+                        this.state = newState;
+                    },
+                    isInCart: function(status) {
+                      return (status === 'purchased');
+                    },
+                    onSwipeLeftItem: function() {
+                        console.log('recognized swipeLeft event');
+                    },
+                    focusOnNewItem: function() {
+                        this.$refs.new-item-text-input.value.focus();
                     }
                 }
             };
