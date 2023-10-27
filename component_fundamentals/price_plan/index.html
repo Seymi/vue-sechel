@@ -16,8 +16,8 @@
             <h1>unsere Preise</h1>
             <p>
                 Eine Familie mit vier Personen hat durchschnittliche Kosten für Lebensmittel und Haushaltswaren in der Höhe von ca. {{ averageCost }} Euro.<br />
-                Mit dieser App kannst Du dir im Schnitt mindestens {{ averageSaving }} Euro im Monat ersparen.<br />
-                Der Preis der Standard Mitgliedschaft beträgt {{ getStandardPrice() }} Euro für ein ganzes Jahr. Du hast also bereits im ersten Monat gespart.<br />
+                Mit dieser App kannst Du dir im Schnitt mindestens {{ getAverageSaving() }} Euro im Monat ersparen.<br />
+                Der Preis der Standard Mitgliedschaft beträgt nur {{ getStandardPrice() }} Euro für ein ganzes Jahr. Du hast also bereits im ersten Monat gespart.<br />
                 Premium Mitglieder haben die Kosten im ersten Monat herinnen.<br />
             </p>
 
@@ -26,19 +26,25 @@
         </div>
 
         <script type="text/x-template" id="price-plan-template">
-            <div class="price-plan">
+            <div class="price-plan" :class="{'active-plan': this.selected}" @click="selectPricePlan()">
                 <div class="description">
-                    <button>{{ price_plan }}</button>
+                    <span class="title">{{ price_plan }}</span>
                     <!--
+                        <button>{{ price_plan }}</button>
                         <span class="title">{{ price_plan }}</span>
                     -->
-
                 </div>
             </div>
         </script>
 
         <script type="text/x-template" id="price-plan-picker-template">
-            <price-plan v-for="plan in plans" :price_plan="plan.price_plan"></price-plan>
+            <price-plan
+                v-for="plan in plans"
+                :price_plan="plan.price_plan"
+                :price="plan.price"
+                :selected="plan.price_plan === selectedPricePlan"
+                v-on:selectedPricePlan="setSelectedPricePlan(plan.price_plan)"
+            ></price-plan>
         </script>
 
         <script src="https://unpkg.com/vue@3"></script>

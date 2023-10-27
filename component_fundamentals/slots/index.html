@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js Slots</title>
+    </head>
+    <body>
+        Das sind Umaute: ÄäÖöÜüß
+        Das sind Sonderzeichen: €@_
+
+        <div id="app">
+            <h1>Vue.js Slots</h1>
+            <todo-item>Vue lernen</todo-item>
+
+            <todo-item>MongoDB Kurs fortsetzen
+                <template v-slot:description>
+                    <p>NoSQL Datenbank </p>
+                </template>
+                <template v-slot:button-text>mach es schön</template>
+            </todo-item>
+
+            <todo-item>edX
+                <p>GraphQL Kurs</p>
+                <button>Gema</button>
+                <p>sagt die Bremma</p>
+
+            </todo-item>
+
+        </div>
+
+        <script type="text/x-template" id="todo-item-template">
+            <div>
+                <input type="checkbox" v-model="done">
+                <span :class="{ done: done }">
+                    <slot></slot>
+                </span>
+                <slot name="description"></slot>
+                <button><slot name="button-text"></slot></button>
+            </div>
+        </script>
+
+        <style>
+            .done {
+                color:green;
+                text-decoration: line-through;
+            }
+
+        </style>
+
+
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="app.js"></script>
+    </body>
+
+
+</html>

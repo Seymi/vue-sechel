@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js Slots</title>
+    </head>
+    <body>
+        <div id="app">
+
+            <page-layout>
+                <template v-slot:header>EKM - Ihr Einkauf Manager</template>
+                <template v-slot:main_1>hier kommt die SLC rein</template>
+                <template class="footer" v-slot:footer>Meine Kontaktdaten:</template>
+            </page-layout>
+
+        </div>
+
+        <script type="text/x-template" id="page-layout-template">
+            <div class="container">
+                <header>
+                    <h1><slot name="header"></slot></h1>
+                </header>
+                <main>
+                    <div id="main" class="main">
+                        <p><slot name="main_1">{{ main_content_1 }}</slot></p>
+                        <p><slot name="main_2">{{ main_content_2 }}</slot></p>
+                    </div>
+                </main>
+                <footer>
+                    <div id="footer" class="footer">
+                        <p><slot name="footer">{{ footer }}</slot></p>
+                    </div>
+                </footer>
+            </div>
+        </script>
+
+        <style>
+            .container {
+            max-width: 1920;
+            padding: 10px;
+            }
+
+            header {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+            }
+
+            footer {
+            width: 100%;
+            margin-top: 50px;
+            text-align: center;
+            }
+        </style>
+
+
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="app.js"></script>
+    </body>
+
+
+</html>
