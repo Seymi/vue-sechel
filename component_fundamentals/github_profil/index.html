@@ -11,16 +11,22 @@
     <body>
         <div id="app" class="ui container">
             <h1>GitHub Profiles</h1>
-            <get-git-response>Hugo</get-git-response>
-            <github-profile>Bla</github-profile>
+
+            <get-git-response></get-git-response>
+
+            <github-profile
+                v-on:gitprofileresponse="setProfileFromResponse(GetGitResponse.response)"
+            >Bla
+            </github-profile>
         </div>
 
 
         <script type="text/x-template" id="get-git-response-template">
             <div id="get-git-response">
-                <input type="text" id="user_name_input" v-model="username.value" placeholder="Username des gesuchten GIT Profil eingeben">
-                <button class="btn btn-primary" @click="getGitProfile(this.username.value)">Profil suchen</button>
+                <input type="text" id="user_name_input" v-model="this.usernameInput.value" placeholder="Username des gesuchten GIT Profil eingeben">
+                <button class="btn btn-primary" @click="this.getGitProfile(this.usernameInput.value)">Profil suchen</button>
             </div>
+
         </script>
 
 
@@ -31,7 +37,7 @@
 
                 </div>
                 <div class="content">
-                  <a class="header">Kristy</a>
+                  <a class="header">{{ this.username.value }}</a>
                   <div class="meta">
                     <span class="date">Joined in 2013</span>
                   </div>
