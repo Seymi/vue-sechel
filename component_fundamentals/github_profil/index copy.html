@@ -12,33 +12,43 @@
         <div id="app" class="ui container">
             <h1>GitHub Profiles</h1>
 
-            <github-profile>Bla</github-profile>
+            <get-git-response></get-git-response>
+
+            <github-profile
+                v-on:gitprofileresponse="setProfileFromResponse(GetGitResponse.response)"
+            >Bla
+            </github-profile>
         </div>
 
 
-        <script type="text/x-template" id="github-profile-template">
+        <script type="text/x-template" id="get-git-response-template">
             <div id="get-git-response">
-                <input type="text" id="user_name_input" v-model="this.username.value" placeholder="Username des gesuchten GIT Profil eingeben">
-                <button class="btn btn-primary" @click="this.getGitProfile(this.username.value)">Profil suchen</button>
+                <input type="text" id="user_name_input" v-model="this.usernameInput.value" placeholder="Username des gesuchten GIT Profil eingeben">
+                <button class="btn btn-primary" @click="this.getResponse(this.usernameInput.value)">Profil suchen</button>
             </div>
 
+        </script>
+
+
+        <script type="text/x-template" id="github-profile-template">
             <div class="ui card">
                 <div class="image">
-                  <img :src="response.avatar_url">
+                  <img src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+
                 </div>
                 <div class="content">
-                  <a :href="`https://github.com/${this.response.login}`" class="header">{{this.response.login}}</a>
+                  <a class="header">{{ this.username.value }}</a>
                   <div class="meta">
-                    <span class="date">Joined in {{ response.created_at }}</span>
+                    <span class="date">Joined in 2013</span>
                   </div>
                   <div class="description">
-                    {{ response.bio }}
+                    Kristy is an art director living in New York.
                   </div>
                 </div>
                 <div class="extra content">
-                    <a :href="`https://api.github.com/users/${username.value}/followers`">
+                  <a>
                     <i class="user icon"></i>
-                    {{ response.followers }} Friends
+                    22 Friends
                   </a>
                 </div>
             </div>
