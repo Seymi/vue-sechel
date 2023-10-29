@@ -1,0 +1,60 @@
+<html lang=""de">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <title>Vue3 - Notification Exercise</title>
+  </head>
+
+  <body>
+    <div id="app" class="ui container">
+      <h1>Notification Center</h1>
+      <notification-message message_type="info">
+        <template v-slot:header>Jackpot</template>
+        <template v-slot:message>Sie haben den <b>Hauptpreis</b> gewonnen!</template>
+      </notification-message>
+
+      <notification-message message_type="warning">
+        <template v-slot:header>Achtung</template>
+        <template v-slot:message>haben Sie <b>ein LOS</b> gekauft?</template>
+      </notification-message>
+
+      <notification-message message_type="error">
+        <template v-slot:header>kein Jackpot</template>
+        <template v-slot:message>Sie haben <b>KEIN LOS</b> gekauft!</template>
+      </notification-message>
+
+      <notification-message message_type="success">
+        <template v-slot:header>Kulanz</template>
+        <template v-slot:message>Wir geben Ihnen <b>10 Prozent</b> von der Gewinnsumme!</template>
+      </notification-message>
+
+
+      <notification-message>
+        <template v-slot:message>etwas ohne Kopf</template>
+      </notification-message>
+    </div>
+
+    <!-- Template for Notification Message -->
+    <script type="text/x-template" id="notification-message-template">
+      <!-- Notification Message Markup -->
+      <!-- Types: info, warning, error, success -->
+      <div v-if="this.hiden===false"
+        class="ui message"
+        :class="message_type"
+      >
+        <i class="close icon" @click="this.hideMessage()"></i>
+        <div class="header">
+          <header>
+            <h1><slot name="header">{{ header }}</slot></h1>
+          </header>
+        </div>
+        <p><slot name="message">{{ message }}</slot></p>
+      </div>
+    </script>
+
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="app.js"></script>
+  </body>
+
+</html>

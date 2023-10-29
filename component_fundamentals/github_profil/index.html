@@ -12,14 +12,23 @@
         <div id="app" class="ui container">
             <h1>GitHub Profiles</h1>
 
-            <github-profile>Bla</github-profile>
+            <github-profile>Seymi</github-profile>
         </div>
 
+        <script src="https://unpkg.com/vue@3"></script>
 
         <script type="text/x-template" id="github-profile-template">
             <div id="get-git-response">
-                <input type="text" id="user_name_input" v-model="this.username.value" placeholder="Username des gesuchten GIT Profil eingeben">
+                <input
+                    type="text" id="user_name_input"
+                    v-model="this.username.value" placeholder="Username eingeben"
+                    @keyup.enter="this.getGitProfile(this.username.value)"
+                >
                 <button class="btn btn-primary" @click="this.getGitProfile(this.username.value)">Profil suchen</button>
+            </div>
+
+            <div id="error-status" v-if="this.error" class="error">
+                Der User {{ username.value }} konnte nicht gefunden werden!
             </div>
 
             <div class="ui card">
@@ -29,14 +38,15 @@
                 <div class="content">
                   <a :href="`https://github.com/${this.response.login}`" class="header">{{this.response.login}}</a>
                   <div class="meta">
-                    <span class="date">Joined in {{ response.created_at }}</span>
+                    <span class="date">Joined in {{ this.formatedDate }}</span>
                   </div>
                   <div class="description">
                     {{ response.bio }}
                   </div>
                 </div>
                 <div class="extra content">
-                    <a :href="`https://api.github.com/users/${username.value}/followers`">
+                    <a :href="`https://github.com/${username.value}?tab=followers`">
+
                     <i class="user icon"></i>
                     {{ response.followers }} Friends
                   </a>
@@ -44,7 +54,12 @@
             </div>
         </script>
 
-        <script src="https://unpkg.com/vue@3"></script>
+        <style>
+          .error {
+            color:red;
+          }
+        </style>
+
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="app.js"></script>
 

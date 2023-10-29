@@ -20,5 +20,13 @@ copy component_fundamentals\page_layout\app.js c:\xampp\htdocs\vue
 
 copy component_fundamentals\github_profil\index.html c:\xampp\htdocs\vue
 copy component_fundamentals\github_profil\app.js c:\xampp\htdocs\vue
+copy component_fundamentals\github_profil\solution.html c:\xampp\htdocs\vue
+
+copy component_fundamentals\github_profil\style.css c:\xampp\htdocs\vue
+
+copy component_fundamentals\notification\index.html c:\xampp\htdocs\vue
+copy component_fundamentals\notification\app.js c:\xampp\htdocs\vue
+
+
 
 echo on
