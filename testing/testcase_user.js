@@ -28,7 +28,7 @@ class User {
 
   testGetName = function() {
     const seymi = {
-        fistname:'Martin',
+        firstname:'Martin',
         lastname:'Seymann'
     }
 
