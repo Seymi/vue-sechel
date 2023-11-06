@@ -17,4 +17,3 @@ function checkPassword(password, lang) {
   console.log(checkPassword("12345678"));
   console.log(checkPassword("1234567"));
   console.log(checkPassword("1234567890123456789"));
-
