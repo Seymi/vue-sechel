@@ -1,7 +1,4 @@
-require("node-fetch");
-//import fetch from "node-fetch";
-
-
+/*
 function sayHi(name) {
     return "Hi " + name;
 }
@@ -18,17 +15,26 @@ console.log(sayHello('Martin'));
 console.log(sagHallo('Chaim'));
 
 
+const result =
+`Erster = 1
+Zweiter = 2`;
+
+console.log(result);
+*/
+
+const greet = (name, age, size, weight) => {
+    console.log(name);
+    console.log(age);
+    console.log(size);
+    console.log(weight);
+}
 
 
-//import fetch from "node-fetch";
+const nickname = "Seymi";
+const size = 178;
+var alter = 58;
+var gewicht = 77;
 
+greet `My name is ${nickname} and my size is ${size}`;
 
-fetch("https://swapi.dev/api/people/1/")
-    .then(res => res.json())
-    .then(json => console.log(json))
-;
-
-fetch("https://swapi.dev/api/people/2")
-    .then(res => res.json())
-    .then(json => console.log(json));
-
+greet `meine Größe ${size} mein Gewicht ${gewicht}`;
