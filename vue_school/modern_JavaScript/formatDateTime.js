@@ -21,9 +21,9 @@ function getDate( datum ) {
     const dd = `${getDatePartPrefix(day)}${day}`;
     const yyyy = `${year}`;
 
-    const formatedDate = `${yyyy}-${mm}-${dd}`;
-    const formatedTime = `${hh}:${mi}:${ss}`;
-    return `${formatedDate} ${formatedTime}`;
+    const formatedDate = `${yyyy}${mm}${dd}`;
+    const formatedTime = `${hh}${mi}${ss}`;
+    return `${formatedDate}_${formatedTime}`;
 }
 
 function logMessage(message, prefix = getDate()) {
@@ -31,7 +31,8 @@ function logMessage(message, prefix = getDate()) {
 }
 
 logMessage('added');
-logMessage('removed',  `${getDate()} ***` );
+logMessage('removed',  `*** ${getDate()} ***` );
 
 logMessage('added', '🫚' );
 
+logMessage('added', '🤣' );
